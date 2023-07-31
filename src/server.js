@@ -1,45 +1,24 @@
-const express = require('express');
-//import UserController from './controller/UserController';
-const server = express();
+import express from "express"
 
-server.use(express.json());
+import mongoose from "mongoose"
 
-const users = ['']
+require("dotenv").config()
 
-server.post("/cadastro", (req,res) => {
+import routes from "./routes/routes"
 
-  const { name } = req.body;
-  users.push(name);
-  console.log(name);
-  return res.json(name);
+import cors from 'cors'
 
-});
+const app = express()
+const PORT = process.env.PORT | 5000
 
-server.get("/listar", (req,res) => {
+app.use(express.json())
+app.use(cors());
 
-  return res.json(users);
+mongoose
+.connect(process.env.MONGO_URI)
+.then(() => console.log('MongoDB Connected'))
+.catch((err) => console.log(err));
 
-});
+app.use("", routes);
 
-server.put("/atualizar/:index", (req,res) => {
-
-  const { index } = req.params;
-  const { name } = req.body;
-
-  users[index] = name;
-  console.log(name);
-  return res.json(users);
-
-});
-
-server.delete("/excluir/:index", (req,res) => {
-
-  const { index } = req.params;
-
-  users.slice(index);
-  console.log(index);
-  return res.json(users);
-
-});
-
-server.listen(3333);
+app.listen(PORT, () => console.log(`Listening at ${PORT}`));
