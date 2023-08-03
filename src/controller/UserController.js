@@ -1,36 +1,63 @@
-class UserController{ 
+import User from '../models/User'
+import Yup from 'yup'
 
-  async store(req,res){
-    const users = ['fabio','diogo','pereira']
-    const { name } = req.body;
-    users.push(name);
-    console.log(name);
-    return res.json(name);  
-  }
+  class UserController{ 
 
-  async update (req,res) {
-    const users = ['fabio','diogo','pereira']
-    const { index } = req.params;
-    const { name } = req.body;
-    
-    users[index] = name;
-    console.log(name);
-    return res.json(users);  
-  }
+    async store(req,res){
+      const { name, email, password } = await User.create(req.body);
+      return res.json({        
+        name ,
+        //lastName,
+        email,
+        //date_of_birth,
+        //sex,
+        //cpf,
+        //number,
+        password,
+      });
+    }
 
-  async index (req,res){
-    const users = ['fabio','diogo','pereira']
-    return res.json(users);
-  }
+    async update (req,res) {
+      
+      const {id} = req.params;
+      const {
+        name ,
+        //lastName,
+        email,
+       // date_of_birth,
+        //sex,
+        //cpf,
+        //number,
+        password, 
+        } = req.body;
+       
+      await User.findByIdAndUpdate(id, {
+        name ,
+        //lastName,
+        email,
+        //date_of_birth,
+        //sex,
+        //cpf,
+        //number,
+        password, })
+      .then(() => res.send("Updated successfully"))
+      .catch((err) => {
+        console.log(err);
+        return res.send({ error: err, msg: "Something went wrong!" })
+      });
 
-  async delete (req,res) {
-    const users = ['fabio','diogo','pereira']
-    const { index } = req.params;  
-    users.slice(index);
-    console.log(index);
-    return res.json(users);
-  
+    }
+
+    async delete (req,res) {
+      const { id } = req.params;  
+
+      await User.findByIdAndDelete(id)
+      .then(() => res.send("Deleted successfully"))
+      .catch((err) => {
+        console.log(err);
+        res.send({ error: err, msg: "Something went wrong!" })
+      });    
+    }
   }
-}
 
 export default new UserController();
