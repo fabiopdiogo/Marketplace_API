@@ -9,7 +9,7 @@ class SessionController {
 
     // Verificando se esse email existe
     const user = await User.findOne({ email });
-    console.log(user);
+    //console.log(user);
     if (!user) {
       return res.status(401).json({ error: 'Usuario não existe.' });
     }
@@ -23,13 +23,7 @@ class SessionController {
 
     const { id, name } = user;
     
-    return res.json({
-      user: {
-        id,
-        name,
-        email,
-      }
-    });
+    return res.status(200).json({ user });
   }
 }
 

@@ -1,6 +1,4 @@
 import { Schema, model } from "mongoose"
-import { VIRTUAL } from "sequelize"
-
   const UserSchema = new Schema({
     _id: { type: Schema.Types.ObjectId, auto: true, startAt: 1},
     name: { type: String},
