@@ -5,10 +5,11 @@ import authConfig from '../config/auth';
 
 class SessionController {
   async store(req, res) {
+    
     const { email, password } = req.body;
     // Verificando se esse email existe
-    const user = await User;
-
+    const user = await User.findOne({email});
+    console.log(user)
     if (!user) {
       return res.status(401).json({ error: 'Usuario não existe.' });
     }
@@ -35,6 +36,7 @@ class SessionController {
   }
 
   async validate(req, res, next){
+    
     const authHeader = req.headers.authorization;
     //console.log(authHeader)
     if (!authHeader) {
