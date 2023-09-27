@@ -9,7 +9,7 @@ class SessionController {
     const { email, password } = req.body;
     // Verificando se esse email existe
     const user = await User.findOne({email});
-    console.log(user)
+    console.log(email, password )
     if (!user) {
       return res.status(401).json({ error: 'Usuario não existe.' });
     }
