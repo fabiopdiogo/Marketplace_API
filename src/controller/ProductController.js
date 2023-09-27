@@ -4,6 +4,7 @@ class ProductController {
    async get(req, res) {
     // Verificando se esse email existe
     const product = await Product.find()
+   
     return res.json(product)
   }
 }
