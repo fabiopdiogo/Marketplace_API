@@ -1,6 +1,6 @@
 import { Schema, model } from "mongoose"
   const UserSchema = new Schema({
-    _id: { type: Schema.Types.ObjectId, auto: true, startAt: 1},
+    _id_carrinho: { type: Schema.Types.ObjectId, auto: true, startAt: 1},
     name: { type: String},
     lastName: { type: String },
     email: {type: String},

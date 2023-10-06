@@ -4,15 +4,23 @@ import Yup from 'yup'
   class UserController{ 
 
     async store(req,res){
-      const { name, email, password } = await User.create(req.body);
+      const { 
+        name ,
+        lastName,
+        email,
+        date_of_birth,
+        sex,
+        cpf,
+        number,
+        password,} = await User.create(req.body);
       return res.json({        
         name ,
-        //lastName,
+        lastName,
         email,
-        //date_of_birth,
-        //sex,
-        //cpf,
-        //number,
+        date_of_birth,
+        sex,
+        cpf,
+        number,
         password,
       });
     }
@@ -22,23 +30,23 @@ import Yup from 'yup'
       const {id} = req.params;
       const {
         name ,
-        //lastName,
+        lastName,
         email,
-       // date_of_birth,
-        //sex,
-        //cpf,
-        //number,
+        date_of_birth,
+        sex,
+        cpf,
+        number,
         password, 
         } = req.body;
        
       await User.findByIdAndUpdate(id, {
         name ,
-        //lastName,
+        lastName,
         email,
-        //date_of_birth,
-        //sex,
-        //cpf,
-        //number,
+        date_of_birth,
+        sex,
+        cpf,
+        number,
         password, })
       .then(() => res.send("Updated successfully"))
       .catch((err) => {
