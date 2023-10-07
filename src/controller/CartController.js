@@ -38,6 +38,21 @@ class CartController {
       return res.status(500).json({ error: 'Erro ao obter o carrinho', message: error.message });
     }
   } 
+
+  async delete(req, res) {
+    const { id_user, id_product } = req.params;
+    try {
+      const cartItem = await Cart.findOneAndDelete({ id_user, id_product });
+
+      if (!cartItem) {
+        return res.status(404).json({ error: 'Produto não encontrado no carrinho' });
+      }
+
+      return res.json({ message: 'Produto removido do carrinho com sucesso', cartItem });
+    } catch (error) {
+      return res.status(500).json({ error: 'Erro ao excluir produto do carrinho', message: error.message });
+    }
+  }
 }
 
 export default new CartController();

@@ -1,6 +1,14 @@
 import Product from '../models/Product';
 
 class ProductController {
+
+  async getAll(req, res) {
+    // Verificando se esse email existe
+    const product = await Product.find()
+
+    return res.json(product)
+  }
+
   async getProduct(req, res) {
     try {
       const { _id } = req.params;  
