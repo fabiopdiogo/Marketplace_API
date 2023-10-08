@@ -39,6 +39,27 @@ class CartController {
     }
   } 
 
+  async updateQuantity(req, res) {
+    const { id_user, id_product } = req.params;
+    const { quantity } = req.body;
+    console.log({ id_user, id_product, quantity })
+    try {
+      const cartItem = await Cart.findOne({ id_user, id_product });
+      console.log(cartItem)
+      if (!cartItem) {
+        return res.status(404).json({ error: 'Produto não encontrado no carrinho' });
+      }
+
+      // Atualize a quantidade do produto no carrinho
+      cartItem.quantity = quantity;
+      await cartItem.save();
+
+      return res.json({ message: 'Quantidade do produto atualizada com sucesso', cartItem });
+    } catch (error) {
+      return res.status(500).json({ error: 'Erro ao atualizar a quantidade do produto no carrinho', message: error.message });
+    }
+  }
+
   async delete(req, res) {
     const { id_user, id_product } = req.params;
     try {

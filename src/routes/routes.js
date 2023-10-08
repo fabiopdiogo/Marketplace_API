@@ -24,8 +24,9 @@ router.delete("/excluir/:id", UserController.delete);
 router.post('/carrinho', CartController.store);
 router.get('/carrinho/:id_user', CartController.getCart);
 router.delete('/carrinho/:id_user/:id_product', CartController.delete);
+router.put('/atualizarcarrinho/:id_user/:id_product', CartController.updateQuantity);
 
 router.get('/get', ProductController.getAll);
 router.get('/item/:_id', ProductController.getProduct);
- 
+
 export default router; 
