@@ -6,12 +6,11 @@ import ProductController from '../controller/ProductController';
 import UserController from '../controller/UserController';
 import SessionController from '../controller/SessionController';
 import CartController from '../controller/CartController';
+import PurchaseController from '../controller/PurchaseController';
 
 const router = Router();
 
 router.use(express.json());
-
-
 
 router.post('/login', SessionController.store);
 
@@ -28,5 +27,7 @@ router.put('/atualizarcarrinho/:id_user/:id_product', CartController.updateQuant
 
 router.get('/get', ProductController.getAll);
 router.get('/item/:_id', ProductController.getProduct);
+
+router.post("/compra/:id_user", PurchaseController.store);
 
 export default router; 

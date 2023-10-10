@@ -1,16 +1,15 @@
 import { Schema, model } from "mongoose"
   const PurchaseSchema = new Schema({
-    _id: { type: Schema.Types.ObjectId, auto: true, startAt: 1},
-    _id_buyer: { type: Schema.Types.ObjectId},
-    _id_product: { type: Schema.Types.ObjectId},
-    name_buyer: { type: String},
-    name_product: { type: String},
-    image_path: {type: String},
-    price:{type: Number},
-    quantity :{type: String},
-    totalPrice:{type: Number},
-    datePurchased:{type:String},
-    status:{type:String},
+    id_user: { type: Schema.Types.ObjectId, required: true }, // ID do usuário que fez a compra
+    products: [
+      {
+        id_product: { type: Schema.Types.ObjectId, required: true }, // ID do produto
+        quantity: { type: Number, required: true }, // Quantidade do produto
+        price: { type: Number, required: true }, // Preço do produto
+      }
+    ],
+    totalAmount: { type: Number, required: true }, // Valor total da compra
+    purchaseDate: { type: Date, default: Date.now }, // Data da compra
  })
 
 module.exports = model('Purchase', PurchaseSchema);
