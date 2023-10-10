@@ -25,7 +25,6 @@ class PurchaseController {
 
       // Calcular o total da compra
       const total = products.reduce((acc, product) => acc + product.price * product.quantity, 0);
-      console.log("O total é :", total)
       // Criar a compra
       const purchase = new Purchase({
         id_user: id_user,
@@ -37,7 +36,7 @@ class PurchaseController {
       await purchase.save();
 
       await Cart.deleteMany({ id_user });
-      
+
       res.status(201).json({ message: 'Compra criada com sucesso', purchase });
     } catch (error) {
       console.error('Erro ao criar a compra:', error);
