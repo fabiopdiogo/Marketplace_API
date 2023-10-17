@@ -12,7 +12,7 @@ import Yup from 'yup'
         sex,
         cpf,
         number,
-        password,} = await User.create(req.body);
+        password} = await User.create(req.body);
       return res.json({        
         name ,
         lastName,

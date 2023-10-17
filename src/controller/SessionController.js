@@ -9,20 +9,17 @@ class SessionController {
     const { email, password } = req.body;
     // Verificando se esse email existe
     const user = await User.findOne({email});
-    console.log(email, password )
     if (!user) {
       return res.status(401).json({ error: 'Usuario não existe.' });
     }
 
     // Verificar se a senha nao bate.
     if ((await user.password != password)) {
-      //console.log(user.password)
-      //console.log(password)
       return res.status(401).json({ error: 'Senha incorreta.' });
     }
 
     const { id, name } = user; 
-
+    console.log({ id, name })
     return res.status(200).json({
       user:{
         id,
@@ -37,25 +34,25 @@ class SessionController {
 
   async validate(req, res, next){
     
-    const authHeader = req.headers.authorization;
-    //console.log(authHeader)
-    if (!authHeader) {
+    const authToken = req.headers.authorization;
+    //console.log(authToken)
+    if (!authToken) {
       return res.status(401).json({ error: 'Token não existe.' });
     }
   
-    const [, token] = authHeader.split(' ');
+    const [, token] = authToken.split(' ');
     //console.log(token)
     try {
-      const decoded = await promisify(jwt.verify)(authHeader, authConfig.secret);
+      const decoded = await promisify(jwt.verify)(authToken, authConfig.secret);
       const email = decoded.email
       const user = await User.findOne({email});
       //console.log(user)
       if (user) 
       return res.status(200).json({user})
-      else console.log("erro")
+      else console.log("Error")
 
     } catch (err) {
-      return res.status(404).json({ message: 'Token invalido.' });
+      return res.json({ message: 'Token invalido.' });
     }
   };
 }
