@@ -42,15 +42,20 @@ class CartController {
   
 
   async getCart(req, res) {
-    const {id_user} = req.params;
+    const { id_user } = req.params;
     try {
-      const cartItems = await Cart.find({id_user});
-      //console.log(cartItems)
-      return res.json({ cartItems });
+      const cart = await Cart.findOne({ id_user });
+  
+      if (!cart) {
+        return res.json({ cartItems: [] }); // Retorna um carrinho vazio se não houver carrinho para o usuário.
+      }
+  
+      return res.json({ cartItems: cart.items });
     } catch (error) {
       return res.status(500).json({ error: 'Erro ao obter o carrinho', message: error.message });
     }
-  } 
+  }
+  
 
   async updateQuantity(req, res) {
     const { id_user, id_product } = req.params;
